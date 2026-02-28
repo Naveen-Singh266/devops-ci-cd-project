@@ -15,7 +15,7 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build -t naveen266/devops-app:${{ github.run_number }} .
-          docker push localhost:5000/devops-app:${{ github.run_number }}
+          docker push naveen266/devops-app:${{ github.run_number }}
 
       - name: Update Image Tag in Terraform
         run: |
