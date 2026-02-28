@@ -30,8 +30,18 @@ jobs:
       - name: Verify Deployment
         run: kubectl get pods
         
-      - name: Port-forwarding for access on browser
-        run: kubectl port-forward service/devops-service 9090:80
+      - name: Port-forward in background
+        shell: powershell
+        run: |
+          Start-Process -NoNewWindow -FilePath "kubectl" -ArgumentList "port-forward service/devops-service 9090:80"
+          Start-Sleep -Seconds 5
 
-      - name: To access the URL by curl
-        run: curl http://localhost:9090/
+      - name: Test Service with curl
+        shell: powershell
+        run: |
+          curl http://localhost:9090/
+
+      - name: Stop Port Forward
+        shell: powershell
+        run: |
+          Get-Process kubectl | Stop-Process -Force
