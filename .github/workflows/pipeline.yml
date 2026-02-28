@@ -29,3 +29,9 @@ jobs:
 
       - name: Verify Deployment
         run: kubectl get pods
+        
+      - name: Port-forwarding for access on browser
+        run: kubectl port-forward service/devops-service 9090:80
+
+      - name: To access the URL by curl
+        run: curl http://localhost:9090/
