@@ -39,5 +39,5 @@ jobs:
       - name: Wait for Deployment
         run: kubectl rollout status deployment/devops-app
 
-      - name: Verify Pods
+      - name: Verify the Pods
         run: kubectl get pods -o wide
