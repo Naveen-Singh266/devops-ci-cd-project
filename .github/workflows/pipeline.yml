@@ -30,14 +30,14 @@ jobs:
 
       - name: Terraform Plan
         working-directory: infra
-        run: terraform plan -var="image_tag=${{ github.run_number }}"
+        run: terraform plan -out=tfplan -var="image_tag=${{ github.run_number }}"
 
       - name: Terraform Apply
         working-directory: infra
-        run: terraform apply -auto-approve -var="image_tag=${{ github.run_number }}"
+        run: terraform apply -auto-approve tfplan
 
       - name: Wait for Deployment
-        run: kubectl rollout status deployment/devops-app
+        run: kubectl rollout status deployment/devops-app --timeout=120s
 
-      - name: Verify the Pods
+      - name: Verify Pods
         run: kubectl get pods -o wide
