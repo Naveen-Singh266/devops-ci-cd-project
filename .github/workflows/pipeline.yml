@@ -1,4 +1,3 @@
-```yaml
 name: Local CI-CD Pipeline
 
 on:
