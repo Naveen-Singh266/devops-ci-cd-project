@@ -53,4 +53,3 @@ jobs:
 
           echo "===== Pods ====="
           kubectl get pods -o wide
-```
