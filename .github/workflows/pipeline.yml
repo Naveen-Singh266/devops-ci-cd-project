@@ -32,7 +32,7 @@ jobs:
       # 5. Create/Update Kubernetes Deployment
       - name: Apply Kubernetes Manifest
         run: |
-          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f K8S/deployment.yaml
 
       # 6. Update Kubernetes Image
       - name: Update Kubernetes Image
