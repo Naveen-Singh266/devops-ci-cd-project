@@ -37,8 +37,7 @@ jobs:
       # 6. Update Kubernetes Image
       - name: Update Kubernetes Image
         run: |
-          kubectl set image deployment/devops-app \
-            devops-app=naveen266/devops-app:${{ github.run_number }}
+          kubectl set image deployment/devops-app devops-app=naveen266/devops-app:${{ github.run_number }}
 
       # 7. Wait for Rollout
       - name: Wait for Deployment
