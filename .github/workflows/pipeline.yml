@@ -5,11 +5,10 @@ on:
     branches: [ main ]
 
 jobs:
-  deploy:
+  Docker_image_build:
     runs-on: self-hosted
 
     steps:
-
       # 1. Checkout source code
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -28,8 +27,20 @@ jobs:
       - name: Push Docker Image
         run: |
           docker push naveen266/devops-app:${{ github.run_number }}
-
-      # 5. Create/Update Kubernetes Deployment
+  Test:
+    runs-on: self-hosted
+    needs: Docker_image_build
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Test
+        run: echo "Testing is successfull"
+  Deployment:
+    runs-on: self-hosted
+    needs: Test
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
       - name: Apply Kubernetes Manifest
         run: |
           kubectl apply -f K8S/deployment.yaml
@@ -43,7 +54,12 @@ jobs:
       - name: Wait for Deployment
         run: |
           kubectl rollout status deployment/devops-app --timeout=120s
-
+  Deployment_verification:
+    runs-on: self-hosted
+    needs: Deployment
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
       # 8. Verify Deployment
       - name: Verify Deployment
         run: |
